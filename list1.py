@@ -70,6 +70,10 @@ async def open_reg(ctx):
     Manager = discord.utils.get(ctx.guild.roles, name="Manager")
 
     team_name = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+    
+    count1 = 0
+    count2 = 0
+    i = 3
     msg_teamList = await team_list_ch.send('**Team List\n1. '+team_name[1]+' \n2. '+team_name[2]+' \n3. '+team_name[3]+' \n4. '+team_name[4]+' \n5. '+team_name[5]+' \n6. '+team_name[6]+' '
                                              '\n7. '+team_name[7]+'\n8. '+team_name[8]+'\n9. '+team_name[9]+'\n10. '+team_name[10]+''
                                              '\n11. '+team_name[11]+'\n12. '+team_name[12]+'\n13. '+team_name[13]+'\n14. '+team_name[14]+''
@@ -79,8 +83,7 @@ async def open_reg(ctx):
 
     team_id = msg_teamList.id
 
-    count1 = 0
-    count2 = 0
+
     await channel.send("**Регистрация открыта! @everyone**")
     await channel.set_permissions(Manager, read_messages=True, send_messages=True)
 
