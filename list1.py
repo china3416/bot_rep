@@ -13,10 +13,15 @@ i = 3
 y = 0
 z = 0
 team_id = 0
+x = 0
+open_check = False
 
 # список зарегестрированных команд
-team_name = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
+team_name = []
 black_list = []
+while x < 26:
+    team_name.append('-')
+    x = x + 1
 
 
 
@@ -65,15 +70,23 @@ async def open_reg(ctx):
     global team_id
     global count1
     global count2
-    channel = bot.get_channel(819000355613835304)
-    team_list_ch = bot.get_channel(816827996681666650)
-    Manager = discord.utils.get(ctx.guild.roles, name="Manager")
-
-    team_name = ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-']
-    
+    global i
+    global x
+    global open_check
+    x = 0
     count1 = 0
     count2 = 0
     i = 3
+    open_check = True
+    channel = bot.get_channel(819000355613835304)
+    team_list_ch = bot.get_channel(816827996681666650)
+    Manager = discord.utils.get(ctx.guild.roles, name="Manager")
+    
+    while x < 26:
+        team_name[x] = '-'
+        x = x + 1
+
+   
     msg_teamList = await team_list_ch.send('**Team List\n1. '+team_name[1]+' \n2. '+team_name[2]+' \n3. '+team_name[3]+' \n4. '+team_name[4]+' \n5. '+team_name[5]+' \n6. '+team_name[6]+' '
                                              '\n7. '+team_name[7]+'\n8. '+team_name[8]+'\n9. '+team_name[9]+'\n10. '+team_name[10]+''
                                              '\n11. '+team_name[11]+'\n12. '+team_name[12]+'\n13. '+team_name[13]+'\n14. '+team_name[14]+''
@@ -170,10 +183,11 @@ async def on_message(message):
     global count1
     global count2
     global i
+    global open_check
 
 
 
-    if message.channel.id == 819000355613835304:
+    if message.channel.id == 819000355613835304 and open_check == True:
 
         for item in black_list:
 
@@ -215,7 +229,8 @@ async def on_message(message):
 
 
         if count2 > 4:
-
+            
+            open_check = False
             embed_obj = discord.Embed(description='**Регистрация закрыта! @everyone**', colour = discord.Color.from_rgb(199, 0, 0))
 
             await reg_ch.send(embed=embed_obj)
