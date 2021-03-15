@@ -38,6 +38,8 @@ async def clear_role(ctx, *, name_role: str):
     while y <= x - 1:
         await cap[y].remove_roles(role)
         y = y + 1
+        
+    await ctx.message.delete()
 
 
 
@@ -47,6 +49,7 @@ async def clear_role(ctx, *, name_role: str):
 @commands.has_role(817170720941015050)
 async def b_list(ctx, member: discord.Member):
     black_list.append(member)
+    await ctx.message.delete()
 
 
 
@@ -58,6 +61,8 @@ async def w_list(ctx, member: discord.Member):
     for item in black_list:
         if item == member:
             black_list.remove(member)
+            
+    await ctx.message.delete()
 
 
 
@@ -99,6 +104,7 @@ async def open_reg(ctx):
 
     await channel.send("**Регистрация открыта! @everyone**")
     await channel.set_permissions(Manager, read_messages=True, send_messages=True)
+    await ctx.message.delete()
 
 
 
@@ -120,10 +126,22 @@ async def lobby(ctx, map: str, time_m: str, id_m: str, passw: str):
     lobby_ch = bot.get_channel(818907684207853568)
 
     await lobby_ch.send("@everyone", embed=embed_obj)
+    await ctx.message.delete()
 
 
 
+@bot.command()
+@commands.has_role(817170720941015050)
+async def close_reg(ctx):
+    reg_ch = bot.get_channel(819000355613835304)
+    channel = bot.get_channel(819000355613835304)
+    global open_check
+    open_check = False
+    embed_obj = discord.Embed(description='**Регистрация закрыта! @everyone**', colour = discord.Color.from_rgb(199, 0, 0))
 
+    await reg_ch.send(embed=embed_obj)
+    await message.channel.set_permissions(Manager, read_messages=True, send_messages=False)
+    await ctx.message.delete()
 
 # embed сообщение
 
@@ -162,7 +180,7 @@ async def team(ctx, i: int, *, name: str):
 
 
 
-
+    await ctx.message.delete()
 
 # Процесс регистрации
 @bot.event
