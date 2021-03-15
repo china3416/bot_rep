@@ -219,7 +219,6 @@ async def on_message(message):
             embed_obj = discord.Embed(description='**Регистрация закрыта! @everyone**', colour = discord.Color.from_rgb(199, 0, 0))
 
             await reg_ch.send(embed=embed_obj)
-            await message.channel.set_permissions(message.guild.default_role, read_messages=True, send_messages=False)
             await message.channel.set_permissions(Manager, read_messages=True, send_messages=False)
 
 
