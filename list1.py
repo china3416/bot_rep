@@ -121,6 +121,7 @@ async def send(ctx, *, text: str):
     embedVar = discord.Embed(description=text, color = discord.Color.from_rgb(199, 0, 0))
 
     await ctx.send(embed=embedVar)
+    await ctx.message.delete()
 
 
 
