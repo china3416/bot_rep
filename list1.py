@@ -5,7 +5,7 @@ discord.Intents.all()
 import os
 
 
-bot = commands.Bot(intents = discord.Intents.all(), command_prefix="/", description="Test Bot for the discord.py")
+bot = commands.Bot(intents = discord.Intents.all(), command_prefix="-", description="Test Bot for the discord.py")
 
 
 teams = []
