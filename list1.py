@@ -5,7 +5,7 @@ discord.Intents.all()
 import os
 
 
-bot = commands.Bot(intents = discord.Intents.all(), command_prefix="-", description="Test Bot for the discord.py")
+bot = commands.Bot(intents = discord.Intents.all(), command_prefix="/", description="Test Bot for the discord.py")
 
 
 teams = []
@@ -60,7 +60,7 @@ async def open_reg(ctx):
     team_id = team_list_msg.id
 
     await reg_ch.send("**Регистрация открыта! @everyone**")
-    await reg_ch.set_permissions(manager, read_messages=True, send_messages=True)
+    await reg_ch.set_permissions(manager, read_messages=True, send_messages=False)
     await ctx.message.delete()
 
 
@@ -76,44 +76,49 @@ async def reg(ctx, team_name: str, tag: str, member: discord.Member):
     global teams_count
     global i
 
+    name = team_name + ' ' + tag + ' ' + member.mention
 
     if ctx.channel.id == 819000355613835304 and reg_check == True:
-        for item in black_list:
+        if name in teams:
+            await reg_ch.send('Ваша команда уже зарегистрирована!')
+        else:
+            for item in black_list:
 
-            if item == ctx.author:
-                await ctx.message.add_reaction("<:No:818987499766546432>")
+                if item == ctx.author:
+                    await ctx.message.add_reaction("<:No:818987499766546432>")
+                    return
+
+            if ctx.author == bot.user:
                 return
 
-        if ctx.author == bot.user:
-            return
+            if teams_count < 18:
+                await ctx.message.add_reaction("<:Yes:818988469891629087>")
+                await member.add_roles(cap)
 
-        if teams_count < 18:
-            await ctx.message.add_reaction("<:Yes:818988469891629087>")
-            await member.add_roles(cap)
+            if teams_count > 17 and teams_count < 23:
+                await ctx.message.add_reaction("<:Res:818992166906888233>")
+                reserve.append(member)
 
-        if teams_count > 17 and teams_count < 23:
-            await ctx.message.add_reaction("<:Res:818992166906888233>")
-            reserve.append(member)
-
-        if teams_count < 23:
-            teams[i] = team_name + ' ' + tag + ' ' + member.mention
-
-            i = i + 1
-            teams_count = teams_count + 1
-            team_list_edit = await team_list_ch.fetch_message(team_id)
-            await team_list_edit.edit(content='**Team List\n1. '+teams[1]+' \n2. '+teams[2]+' \n3. '+teams[3]+' \n4. '+teams[4]+' \n5. '+teams[5]+' \n6. '+teams[6]+' '
-                                              '\n7. '+teams[7]+'\n8. '+teams[8]+'\n9. '+teams[9]+'\n10. '+teams[10]+''
-                                              '\n11. '+teams[11]+'\n12. '+teams[12]+'\n13. '+teams[13]+'\n14. '+teams[14]+''
-                                              '\n15. '+teams[15]+'\n16. '+teams[16]+'\n17. '+teams[17]+'\n18. '+teams[18]+''
-                                              '\n19. '+teams[19]+'\n20. '+teams[20]+'\nReserve\n1. '+teams[21]+''
-                                              '\n2. '+teams[22]+'\n3. '+teams[23]+'\n4. '+teams[24]+'\n5. '+teams[25]+'**')
+            if teams_count < 23:
+                teams[i] = name
+                i = i + 1
 
 
 
-        if teams_count > 22:
-            embed_obj = discord.Embed(description='**Регистрация закрыта! @everyone**', colour = discord.Color.from_rgb(199, 0, 0))
-            await ctx.send(embed=embed_obj)
-            await reg_ch.set_permissions(manager, read_messages=True, send_messages=False)
+                teams_count = teams_count + 1
+                team_list_edit = await team_list_ch.fetch_message(team_id)
+                await team_list_edit.edit(content='**Team List\n1. '+teams[1]+' \n2. '+teams[2]+' \n3. '+teams[3]+' \n4. '+teams[4]+' \n5. '+teams[5]+' \n6. '+teams[6]+' '
+                                                  '\n7. '+teams[7]+'\n8. '+teams[8]+'\n9. '+teams[9]+'\n10. '+teams[10]+''
+                                                  '\n11. '+teams[11]+'\n12. '+teams[12]+'\n13. '+teams[13]+'\n14. '+teams[14]+''
+                                                  '\n15. '+teams[15]+'\n16. '+teams[16]+'\n17. '+teams[17]+'\n18. '+teams[18]+''
+                                                  '\n19. '+teams[19]+'\n20. '+teams[20]+'\nReserve\n1. '+teams[21]+''
+                                                  '\n2. '+teams[22]+'\n3. '+teams[23]+'\n4. '+teams[24]+'\n5. '+teams[25]+'**')
+
+
+            if teams_count > 22:
+                embed_obj = discord.Embed(description='**Регистрация закрыта! @everyone**', colour = discord.Color.from_rgb(199, 0, 0))
+                await ctx.send(embed=embed_obj)
+                await reg_ch.set_permissions(manager, read_messages=True, send_messages=False)
 
 
 
@@ -241,9 +246,11 @@ async def send(ctx, *, text: str):
 # Редактирование списка участников
 @bot.command()
 @commands.has_role(817170720941015050)
-async def team(ctx, i: int, *, name: str):
+async def team(ctx, i: int, team_name: str, tag: str, member: discord.Member):
 
-    if name == 'none':
+    name = team_name + ' ' + tag + ' ' + member.mention
+
+    if team_name == 'none':
         teams.pop(i)
     else:
         teams[i] = name
@@ -261,6 +268,9 @@ async def team(ctx, i: int, *, name: str):
 
 token = os.environ.get('BOT_TOKEN')
 bot.run(token)
+
+
+
 
 
 
