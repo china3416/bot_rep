@@ -119,7 +119,7 @@ async def reg(ctx, team_name: str, tag: str, member: discord.Member):
 
 
 @bot.command()
-async def unreg(ctx, team_name: str, member: discord.Member):
+async def unreg(ctx, team_name: str, tag: str, member: discord.Member):
     team_list_ch = bot.get_channel(816827996681666650)
     cap = discord.utils.get(ctx.guild.roles, name="Cap-chat")
 
@@ -127,7 +127,7 @@ async def unreg(ctx, team_name: str, member: discord.Member):
     global l
 
     if ctx.channel.id == 819000355613835304 and reg_check == True:
-        teams.remove(team_name + ' ' + member.mention)
+        teams.remove(team_name + ' ' + tag + ' ' + member.mention)
         await member.remove_roles(cap)
         teams.append('-')
 
