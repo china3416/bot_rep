@@ -243,7 +243,7 @@ async def send(ctx, *, text: str):
 
 
 
-# Редактирование списка участников
+#Редактирование списка участников
 @bot.command()
 @commands.has_role(817170720941015050)
 async def team(ctx, i: int, team_name: str, tag: str, member: discord.Member):
