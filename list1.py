@@ -60,7 +60,7 @@ async def open_reg(ctx):
     team_id = team_list_msg.id
 
     await reg_ch.send("**Регистрация открыта! @everyone**")
-    await reg_ch.set_permissions(manager, read_messages=True, send_messages=False)
+    await reg_ch.set_permissions(manager, read_messages=True, send_messages=True)
     await ctx.message.delete()
 
 
