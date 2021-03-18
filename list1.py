@@ -60,7 +60,7 @@ async def open_reg(ctx):
     team_id = team_list_msg.id
 
     await reg_ch.send("**Регистрация открыта! @everyone**")
-    await reg_ch.set_permissions(manager, read_messages=True, send_messages=True)
+    await reg_ch.set_permissions(manager, read_messages=True, send_messages=False)
     await ctx.message.delete()
 
 
@@ -261,7 +261,6 @@ async def team(ctx, i: int, *, name: str):
 
 token = os.environ.get('BOT_TOKEN')
 bot.run(token)
-
 
 
 
