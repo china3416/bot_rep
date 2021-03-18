@@ -66,7 +66,7 @@ async def open_reg(ctx):
 
 
 @bot.command()
-async def reg(ctx, team_name: str, member: discord.Member):
+async def reg(ctx, team_name: str, tag: str, member: discord.Member):
     team_list_ch = bot.get_channel(816827996681666650)
     reg_ch = bot.get_channel(819000355613835304)
 
@@ -96,7 +96,7 @@ async def reg(ctx, team_name: str, member: discord.Member):
             reserve.append(member)
 
         if teams_count < 23:
-            teams[i] = team_name + ' ' + member.mention
+            teams[i] = team_name + ' ' + tag + ' ' + member.mention
 
             i = i + 1
             teams_count = teams_count + 1
