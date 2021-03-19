@@ -60,7 +60,7 @@ async def open_reg(ctx):
     team_id = team_list_msg.id
 
     await reg_ch.send("**Регистрация открыта! @everyone**")
-    await reg_ch.set_permissions(manager, read_messages=True, send_messages=False)
+    await reg_ch.set_permissions(manager, read_messages=True, send_messages=True)
     await ctx.message.delete()
 
 
@@ -102,10 +102,9 @@ async def reg(ctx, team_name: str, tag: str, member: discord.Member):
             if teams_count < 23:
                 teams[i] = name
                 i = i + 1
-
-
-
                 teams_count = teams_count + 1
+                
+                
                 team_list_edit = await team_list_ch.fetch_message(team_id)
                 await team_list_edit.edit(content='**Team List\n1. '+teams[1]+' \n2. '+teams[2]+' \n3. '+teams[3]+' \n4. '+teams[4]+' \n5. '+teams[5]+' \n6. '+teams[6]+' '
                                                   '\n7. '+teams[7]+'\n8. '+teams[8]+'\n9. '+teams[9]+'\n10. '+teams[10]+''
